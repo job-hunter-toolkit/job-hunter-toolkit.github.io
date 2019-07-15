@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://animejs.com/lib/anime.min.js"></script>
   </head>
 
   <body>
@@ -65,14 +66,14 @@
       <div v-if="total > 0">
         <div class="notification">
           <div class="field is-grouped is-grouped-multiline">
-            <div class="control">
+            <div v-anime="{ translateX: [-200, 0] }" class="control">
               <div class="tags has-addons">
                 <span class="tag is-dark">Total Results</span>
                 <span class="tag is-link">{{total}}</span>
               </div>
             </div>
 
-            <div class="control" v-if="totalMatching > 0">
+            <div v-anime="{ translateX: [-200, 0] }" class="control" v-if="totalMatching > 0">
               <div class="tags has-addons">
                 <span class="tag is-dark">Matching Results</span>
                 <span class="tag is-link">{{totalMatching}}</span>
@@ -80,7 +81,7 @@
             </div>
 
             <template v-for="(filter,index) in filters">
-              <div class="control">
+              <div v-anime="{ translateX: [-200, 0] }" class="control">
                 <div class="tags has-addons">
                   <span class="tag is-dark">Filter</span>
                   <span class="tag is-link">{{filter}}</span>
@@ -123,6 +124,15 @@
 
 <script>
 
+Vue.directive('anime', {
+    bind: function bind(targets, binding) {
+      var opts = Object.assign({}, binding.value, { targets: targets });
+      anime(opts);
+    }
+});
+
+Vue.prototype.$anime = anime;
+
 navigator.serviceWorker && navigator.serviceWorker.register('./sw.js').then(function(registration) {
   console.log('Excellent, registered with scope: ', registration.scope);
 });
@@ -147,6 +157,7 @@ var app = new Vue({
     },
     setTotal(total) {
       this.total = total;
+
     },
     setJobPostings(postings) {
       this.jobpostings = postings.slice(this.start , this.stop);
@@ -255,10 +266,9 @@ async function* makeTextFileLineIterator(fileURL) {
   }
 
   app.setTotal(jobPostings.length)
+
 })();
 </script>
-
-
 
 <script>
   // bulma burger nonsense
