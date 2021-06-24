@@ -258,7 +258,7 @@ async function* makeTextFileLineIterator(fileURL) {
   // TODO : Generate this file daily
   // this is fine
   // :)
-  var jobPostingsFile = await makeTextFileLineIterator("https://gist.githubusercontent.com/picatz/fc85f233e894e2bb0b7cc5a41438510d/raw/362ecb454edf50dbcda0668c13f0f0bb1c3f0359/job-postings")
+  var jobPostingsFile = await makeTextFileLineIterator("https://gist.githubusercontent.com/picatz/fc85f233e894e2bb0b7cc5a41438510d/raw/724ccf4b3796c2b61edc8d44c0f9e7bb09f8cf66/job-postings")
 
   for await (let line of jobPostingsFile) {
     var jobPosting = JSON.parse(line);
